@@ -1,24 +1,20 @@
 const router = require('express').Router();
 var path = require('path');
-
-//CONECTAR A BASE DE DATOS
+const utilidades = require(path.join(__dirname, '..', '/base/utilidades'))
 const db = require(path.join(__dirname, '..', '/models/usuario'));
 
 router.get('/', (req, res, next) => {
-    db.obtenerTodos(req.query)
-    .then(function(ok) {
-        res.send(ok);
+    db.usuario.find({}, function (err, usuarios) {
+        res.send(utilidades.manejarError(err, usuarios));
     });
     //res.render('index.html');
 });
 
-// router.get('/:id', (req, res, next) => {
-//     db.tareas.findOne({ _id: mongojs.ObjectId(req.params.id) }, (err, tarea) => {
-//         if (err) return next(err);
-
-//         res.json(tarea);
-//     });
-// });
+router.get('/:id', (req, res, next) => {
+    db.usuario.findById(req.params.id, function (err, usuario) {
+        res.send(utilidades.manejarError(err, usuario));
+    });   
+});
 
 router.post('/', (req, res, next) => {
     // if (!nuevaTarea.nombre) {
@@ -26,11 +22,17 @@ router.post('/', (req, res, next) => {
     //         error: 'Falta parametro nombre'
     //     });
     // }
+    var nuevoUsuario = new db.usuario({
+        nombre: req.body.nombre,
+        apellido: req.body.apellido
+    });
 
-    res.send(db.crear(req));
-    // .then(function(ok) {
-    //     res.send(ok); 
-    // });
+    if (!nuevoUsuario.nombre)
+        throw "error al crear, falta nombre";
+
+    nuevoUsuario.save(function (err, usuario) {
+        res.send(utilidades.manejarError(err, usuario));
+    });
 });
 
 // router.delete('/:id', (req, res, next) => {
@@ -52,3 +54,4 @@ router.post('/', (req, res, next) => {
 // });
 
 module.exports = router;
+
