@@ -1,4 +1,4 @@
-var manejarError = function (res, err, obj) {
+var manejarError = function (err, obj) {
     if (err) {
         console.error(err);
         return err

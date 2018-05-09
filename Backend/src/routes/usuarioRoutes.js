@@ -30,28 +30,33 @@ router.post('/', (req, res, next) => {
     if (!nuevoUsuario.nombre)
         throw "error al crear, falta nombre";
 
+    console.log(nuevoUsuario);
+    
     nuevoUsuario.save(function (err, usuario) {
+        console.log(err);
+        console.log(usuario);
+        
         res.send(utilidades.manejarError(err, usuario));
     });
 });
 
-// router.delete('/:id', (req, res, next) => {
-//     db.tareas.remove({ _id: mongojs.ObjectId(req.params.id) }, (err, result) => {
-//         if (err) return next(err);
+router.delete('/:id', (req, res, next) => {
+    db.usuario.findByIdAndRemove(req.params.id, (err, usuario) => {
+        if (err) res.status(500).send(err);
 
-//         res.json(result);
-//     });
-// });
+        res.status(200).send(usuario);
+    });
+});
 
-// router.put('/:id', (req, res, next) => {
-//     const nuevaTarea = req.body;
+router.put('/:id', (req, res, next) => {
+    const nuevoUsuario = req.body;
 
-//     db.tareas.update({ _id: mongojd.ObjectId(res.params.id) }, (err, tarea) => {
-//         if (err) return next(err);
+    db.usuario.findByIdAndUpdate(req.params.id, nuevoUsuario, {new: true}, (err, usuario) => {
+        if (err) res.status(500).send(err);
 
-//         res.json(tarea);
-//     });
-// });
+        res.status(200).send(usuario);
+    });
+});
 
 module.exports = router;
 

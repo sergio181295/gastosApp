@@ -2,7 +2,6 @@ var mongoose = require('./_db').mongoose;
 var usuario;
 
 var usuarioSchema = mongoose.Schema({
-    codigo: {type: Number, required: true},
     nombre : {type: String, required: true},
     apellido : {type: String, required: true},
     fechaCreacion: {type: Date, default: Date.now}
