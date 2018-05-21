@@ -1,0 +1,36 @@
+<h1 style="color:blue"> {{titulo}} </h1>
+
+<div>
+    <button (click)='cambiarTrabajador()'>Siguiente Empleado</button>
+
+    <p>
+        <b>Empleado {{numeroEmpleado + 1}}:</b>
+        <br/>
+        <br/>
+        Nombre: {{empleados[numeroEmpleado].nombre}}
+        <br>
+        Edad: {{empleados[numeroEmpleado].edad}}
+        <br>
+        Area: {{empleados[numeroEmpleado].serviciosCliente ? 'Cliente' : 'Servicios'}}
+    </p>
+</div>
+
+<hr>
+
+<h3> Listado de Empleados</h3>
+<table> 
+    <thead>
+        <th>No.</th>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Area</th>
+    </thead>
+    <tbody>
+        <tr *ngFor='let empleado of empleados; let i = index'>
+            <td>{{i+1}}</td>
+            <td>{{empleado.nombre}}</td>
+            <td>{{empleado.edad}}</td>
+            <td>{{empleado.serviciosCliente ? 'Cliente' : 'Servicios'}}</td>
+        </tr>
+    </tbody>
+</table>
