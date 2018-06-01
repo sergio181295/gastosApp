@@ -1,6 +1,7 @@
 <h1 style="color:blue"> {{titulo}} </h1>
 
-<div>
+parametro = {{idParametro}}
+<!-- <div>
     <button (click)='cambiarTrabajador()'>Siguiente Empleado</button>
 
     <p>
@@ -13,6 +14,21 @@
         <br>
         Area: {{empleados[numeroEmpleado].serviciosCliente ? 'Cliente' : 'Servicios'}}
     </p>
+</div> -->
+
+<hr>
+
+<div class="listado">
+    <h3> Listado de Articulos</h3>
+    <ul *ngIf="articulos">
+        <li>
+            <b>No. - Titulo </b>
+        </li>
+        <li *ngFor='let articulo of articulos'>
+            {{articulo.id}} - {{articulo.title}}
+        </li>
+    </ul>
+    <span *ngIf="!articulos">Cargando articulos...</span>
 </div>
 
 <hr>

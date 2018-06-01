@@ -18,4 +18,13 @@
   </li>
 </ul> -->
 
-<empleado></empleado>
+<!-- <empleado></empleado> -->
+<nav>
+  <a [routerLink]="['/empleados']" [routerLinkActive]="['activado']"> Empleados</a>
+  -
+  <a [routerLink]="['/empleados/nuevo']" [routerLinkActive]="['activado']"> Nuevo Empleado</a>
+  -
+  <a [routerLink]="['/plantillas']" [routerLinkActive]="['activado']"> Plantillas</a>
+</nav>
+<hr>
+<router-outlet></router-outlet>
