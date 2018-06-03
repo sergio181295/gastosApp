@@ -1,0 +1,2 @@
+- descargar e instalar node y npm
+- instalar angular cli
