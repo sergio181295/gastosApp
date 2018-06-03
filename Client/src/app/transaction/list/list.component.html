@@ -1,0 +1,24 @@
+<h1>Lista de Transacciones</h1>
+
+<hr>
+
+<table>
+    <thead> 
+        <th>Descripción</th>
+        <th>Valor</th>
+        <th align="center">D/C</th>
+        <th>Fecha</th>
+        <th>Categoria</th>
+        <th>Cuenta</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let transaction of list">
+            <td> {{transaction.descripcion}} </td>
+            <td> {{transaction.valor | currency:'Q'}} </td>
+            <td align="center"> {{transaction.debitoCredito? 'C' : 'D'}} </td>
+            <td> {{transaction.fecha | date:'dd/MM/yyyy'}} </td>
+            <td align="center"> {{transaction.categoriaId}} </td>
+            <td align="center"> {{transaction.cuentaIdId}} </td>
+        </tr>
+    </tbody>
+</table>
