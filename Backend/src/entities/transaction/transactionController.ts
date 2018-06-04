@@ -1,6 +1,6 @@
-import { Transaction } from "./transactionModel";
+import  Transaction  from "./transactionModel";
 
-export class transactionController {
+export class TransactionController {
 
     getAll(req, res, next) {
         Transaction.find((ex, data) => {
@@ -34,7 +34,7 @@ export class transactionController {
 
         //VALIDACIONES 
 
-        Transaction.save((ex, transaction) => {
+        newTransaction.save((ex, transaction) => {
             if(ex){
                 res.status(500).json({ex});
             }
