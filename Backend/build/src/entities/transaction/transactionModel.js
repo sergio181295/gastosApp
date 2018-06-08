@@ -17,7 +17,8 @@ var transactionSchema = new schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     },
     categoryId: {
         type: Number,

@@ -3,7 +3,11 @@
         "outDir": "./build",
         "sourceMap": true,
         "target": "es5",
-        "module": "commonjs"
+        "module": "commonjs",
+        // "esModuleInterop": true,
+        // "noImplicitAny": true,
+        //"moduleResolution": "node",
+        "baseUrl": "."
     },
     "include": [
         "./**/*"
