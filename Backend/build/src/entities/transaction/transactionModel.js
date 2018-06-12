@@ -29,5 +29,5 @@ var transactionSchema = new schema({
         required: true
     },
 });
-exports.default = mongoose.model('Transaction', transactionSchema);
+exports.default = mongoose.model('TransactionModel', transactionSchema);
 //# sourceMappingURL=transactionModel.js.map

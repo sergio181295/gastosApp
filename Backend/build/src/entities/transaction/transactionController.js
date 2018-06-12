@@ -1,30 +1,22 @@
 "use strict";
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-// import * as utilities from "../../base/utilities";
-var utilities_1 = require("../../base/utilities");
+var utilities = require("../../base/utilities");
+// import Utilities } from "../../base/utilities";
 // let utilities = require("../../base/utilities");
 var transactionModel_1 = require("./transactionModel");
-var utilities = new utilities_1.Utilities();
-exports.sayHello = function (aName) {
-    console.log(aName);
-};
-exports.saludar = function () {
-    _this.sayHello('Hola mundo !!!');
-};
+var mongoose_1 = require("mongoose");
+// let utilities: Utilities = new Utilities();
 exports.getAll = function (req, res, next) {
-    _this.validateFields('jds');
     transactionModel_1.default.find(function (ex, data) {
-        // let check = utilities.chechError(ex, data);
-        // return res.status(check.status).json(check.result);
-        return utilities_1.Utilities.checkError(ex, data, res);
-        // return this.utilities.checkError(ex, data, res);
+        // return Utilities.checkError(ex, data, res);
+        return utilities.checkError(ex, data, res);
     });
 };
 exports.getById = function (req, res, next) {
     var id = req.params.id;
     transactionModel_1.default.findById(id, function (ex, transaction) {
-        return utilities_1.Utilities.checkError(ex, transaction, res);
+        return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
 };
@@ -38,30 +30,42 @@ exports.create = function (req, res, next) {
         accountId: req.body.accountId
     });
     //VALIDACIONES 
-    // TransactionController.validateFields('hola');
-    newTransaction.save(function (ex, transaction) {
-        // let check = this.utilities.checkError(ex, transaction);
-        // return res.status(check.status).json(check.result);
-        return utilities_1.Utilities.checkError(ex, transaction, res);
-        // return this.utilities.checkError(ex, transaction, res);
+    _this.validateFields(newTransaction, res)
+        .then(function (result) {
+        newTransaction.save(function (ex, transaction) {
+            return utilities.checkError(ex, transaction, res);
+            // return this.utilities.checkError(ex, transaction, res);
+        });
+    })
+        .catch(function (ex) {
+        return utilities.checkError(ex, null, res);
     });
 };
 exports.update = function (req, res, next) {
     var id = req.params.id;
     transactionModel_1.default.findByIdAndUpdate(id, req.body, { new: true }, function (ex, transaction) {
-        return utilities_1.Utilities.checkError(ex, transaction, res);
+        return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
 };
 exports.remove = function (req, res, next) {
     var id = req.params.id;
     transactionModel_1.default.findByIdAndRemove(id, function (ex, transaction) {
-        return utilities_1.Utilities.checkError(ex, transaction, res);
+        return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
 };
-exports.validateFields = function (transaction) {
-    console.log(transaction);
+exports.validateFields = function (transaction, res) {
+    var error = "";
+    return new mongoose_1.Promise(function (resolve, reject) {
+        if (transaction.value < 0) {
+            error += "El valor debe ser mayor de 0.";
+        }
+        if (error.length > 0) {
+            reject(error);
+        }
+        resolve();
+    });
 };
 ////CLASE
 // export class TransactionController  {
@@ -77,7 +81,7 @@ exports.validateFields = function (transaction) {
 //     };
 //     getAll(req, res, next) {
 //         this.validateFields('jds');
-//         Transaction.find((ex, data) => {
+//         TransactionModel.find((ex, data) => {
 //             // let check = utilities.chechError(ex, data);
 //             // return res.status(check.status).json(check.result);
 //             return Utilities.checkError(ex, data, res);
@@ -86,13 +90,13 @@ exports.validateFields = function (transaction) {
 //     }
 //     getById(req, res, next){
 //         let id = req.params.id;
-//         Transaction.findById(id, (ex, transaction) => {
+//         TransactionModel.findById(id, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });
 //     }
 //     create(req, res, next){
-//         let newTransaction = new Transaction({
+//         let newTransaction = new TransactionModel({
 //             description: req.body.description,
 //             value: req.body.value,
 //             debitCredit: req.body.debitCredit,
@@ -111,14 +115,14 @@ exports.validateFields = function (transaction) {
 //     }
 //     update(req, res, next){
 //         let id = req.params.id;
-//         Transaction.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
+//         TransactionModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });
 //     }
 //     delete(req, res, next){
 //         let id = req.params.id;
-//         Transaction.findByIdAndRemove(id, (ex, transaction) => {
+//         TransactionModel.findByIdAndRemove(id, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });

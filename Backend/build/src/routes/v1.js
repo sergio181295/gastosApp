@@ -6,7 +6,6 @@ exports.default = (function (app) {
     var apiRoutes = express.Router();
     //TRANSACTIONS ROUTES
     var transactionRoutes = express.Router();
-    transactionController.saludar();
     transactionRoutes.get('/', transactionController.getAll);
     transactionRoutes.get('/:id', transactionController.getById);
     transactionRoutes.post('/', transactionController.create);

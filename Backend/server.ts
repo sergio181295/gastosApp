@@ -35,7 +35,9 @@ let puerto = 8000;
 app.set('port', puerto);
 
 let server = app.listen(puerto, () => {
+    console.log(new Date().getHours() + ":" + new Date().getMinutes());
     console.log('servidor en puerto ' + app.get('port'));
+    
 });
 
 export default server;
