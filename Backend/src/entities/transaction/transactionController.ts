@@ -70,7 +70,7 @@ export let validateFields = function (transaction:Transaction, res) {
     let error:string = "";
 
     return new Promise((resolve, reject) => {
-        if(transaction.value < 0){
+        if(transaction.value <= 0){
             error += "El valor debe ser mayor de 0.";
         }
 
