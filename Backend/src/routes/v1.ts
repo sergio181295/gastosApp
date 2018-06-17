@@ -2,6 +2,7 @@ import * as express from 'express';
 
 import * as transactionController from "../entities/transaction/transactionController";
 import * as accountController from "../entities/account/accountController";
+import * as categoryController from "../entities/category/categoryController";
 
 export default (app) => {
     const apiRoutes = express.Router();
@@ -25,6 +26,16 @@ export default (app) => {
     accountsRoutes.delete('/:id', accountController.remove);
 
     apiRoutes.use('/accounts', accountsRoutes);
+
+    //ACCOUNTS ROUTES
+    const categoryRoutes = express.Router();
+    categoryRoutes.get('/', categoryController.getAll);
+    categoryRoutes.get('/:id', categoryController.getById);
+    categoryRoutes.post('/', categoryController.create);
+    categoryRoutes.put('/:id', categoryController.update);
+    categoryRoutes.delete('/:id', categoryController.remove);
+
+    apiRoutes.use('/categories', categoryRoutes);
 
     app.use(apiRoutes);
 }
