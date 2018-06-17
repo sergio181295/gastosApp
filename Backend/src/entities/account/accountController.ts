@@ -1,13 +1,13 @@
 import * as utilities from "../../base/utilities";
 // import Utilities } from "../../base/utilities";
-import AccountModel  from "./accountModel";
+import Model  from "./accountModel";
 import Account from './account'
 import { Promise } from "mongoose";
 
 // let utilities: Utilities = new Utilities();
 
 export let getAll = (req, res, next) => {
-    AccountModel.find((ex, data) => {
+    Model.find((ex, data) => {
         // return Utilities.checkError(ex, data, res);
         return utilities.checkError(ex, data, res);
     })
@@ -16,22 +16,22 @@ export let getAll = (req, res, next) => {
 export let getById = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findById(id, (ex, account) => {
+    Model.findById(id, (ex, account) => {
         return utilities.checkError(ex, account, res);
         // return this.utilities.checkError(ex, account, res);
     });
 };
 
 export let create = (req, res, next) => {
-    let newTransaction = new AccountModel({
+    let newAccount = new Model({
         name: req.body.name,
         initialValue: req.body.initialValue
     });
 
     //VALIDACIONES 
-    this.validateFields(newTransaction, res)
+    this.validateFields(newAccount, res)
     .then((result) =>{
-        newTransaction.save((ex, account) => {
+        newAccount.save((ex, account) => {
             return utilities.checkError(ex, account, res);
             // return this.utilities.checkError(ex, account, res);
         });
@@ -45,7 +45,7 @@ export let create = (req, res, next) => {
 export let update = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
+    Model.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
         return utilities.checkError(ex, account, res);
         // return this.utilities.checkError(ex, account, res);
     });
@@ -54,7 +54,7 @@ export let update = (req, res, next) => {
 export let remove = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findByIdAndRemove(id, (ex, account) => {
+    Model.findByIdAndRemove(id, (ex, account) => {
         return utilities.checkError(ex, account, res);
         // return this.utilities.checkError(ex, account, res);
     });
@@ -97,7 +97,7 @@ export let validateFields = function (account:Account, res) {
     
 //     getAll(req, res, next) {
 //         this.validateFields('jds');
-//         AccountModel.find((ex, data) => {
+//         Model.find((ex, data) => {
 //             // let check = utilities.chechError(ex, data);
 //             // return res.status(check.status).json(check.result);
 
@@ -109,14 +109,14 @@ export let validateFields = function (account:Account, res) {
 //     getById(req, res, next){
 //         let id = req.params.id;
 
-//         AccountModel.findById(id, (ex, account) => {
+//         Model.findById(id, (ex, account) => {
 //             return Utilities.checkError(ex, account, res);
 //             // return this.utilities.checkError(ex, account, res);
 //         });
 //     }
 
 //     create(req, res, next){
-//         let newTransaction = new AccountModel({
+//         let newTransaction = new Model({
 //             description: req.body.description,
 //             value: req.body.value,
 //             debitCredit: req.body.debitCredit,
@@ -140,7 +140,7 @@ export let validateFields = function (account:Account, res) {
 //     update(req, res, next){
 //         let id = req.params.id;
         
-//         AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
+//         Model.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
 //             return Utilities.checkError(ex, account, res);
 //             // return this.utilities.checkError(ex, account, res);
 //         });
@@ -149,7 +149,7 @@ export let validateFields = function (account:Account, res) {
 //     delete(req, res, next){
 //         let id = req.params.id;
 
-//         AccountModel.findByIdAndRemove(id, (ex, account) => {
+//         Model.findByIdAndRemove(id, (ex, account) => {
 //             return Utilities.checkError(ex, account, res);
 //             // return this.utilities.checkError(ex, account, res);
 //         });

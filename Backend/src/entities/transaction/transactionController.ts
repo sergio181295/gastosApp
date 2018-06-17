@@ -1,13 +1,13 @@
 import * as utilities from "../../base/utilities";
 // import Utilities } from "../../base/utilities";
-import  TransactionModel  from "./transactionModel";
+import Model  from "./transactionModel";
 import Transaction from './transaction'
 import { Promise } from "mongoose";
 
 // let utilities: Utilities = new Utilities();
 
 export let getAll = (req, res, next) => {
-    TransactionModel.find((ex, data) => {
+    Model.find((ex, data) => {
         // return Utilities.checkError(ex, data, res);
         return utilities.checkError(ex, data, res);
     })
@@ -16,14 +16,14 @@ export let getAll = (req, res, next) => {
 export let getById = (req, res, next) => {
     let id = req.params.id;
 
-    TransactionModel.findById(id, (ex, transaction) => {
+    Model.findById(id, (ex, transaction) => {
         return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
 };
 
 export let create = (req, res, next) => {
-    let newTransaction = new TransactionModel({
+    let newTransaction = new Model({
         description: req.body.description,
         value: req.body.value,
         debitCredit: req.body.debitCredit,
@@ -50,7 +50,7 @@ export let create = (req, res, next) => {
 export let update = (req, res, next) => {
     let id = req.params.id;
 
-    TransactionModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
+    Model.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
         return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
@@ -59,7 +59,7 @@ export let update = (req, res, next) => {
 export let remove = (req, res, next) => {
     let id = req.params.id;
 
-    TransactionModel.findByIdAndRemove(id, (ex, transaction) => {
+    Model.findByIdAndRemove(id, (ex, transaction) => {
         return utilities.checkError(ex, transaction, res);
         // return this.utilities.checkError(ex, transaction, res);
     });
@@ -102,7 +102,7 @@ export let validateFields = function (transaction:Transaction, res) {
     
 //     getAll(req, res, next) {
 //         this.validateFields('jds');
-//         TransactionModel.find((ex, data) => {
+//         Model.find((ex, data) => {
 //             // let check = utilities.chechError(ex, data);
 //             // return res.status(check.status).json(check.result);
 
@@ -114,14 +114,14 @@ export let validateFields = function (transaction:Transaction, res) {
 //     getById(req, res, next){
 //         let id = req.params.id;
 
-//         TransactionModel.findById(id, (ex, transaction) => {
+//         Model.findById(id, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });
 //     }
 
 //     create(req, res, next){
-//         let newTransaction = new TransactionModel({
+//         let newTransaction = new Model({
 //             description: req.body.description,
 //             value: req.body.value,
 //             debitCredit: req.body.debitCredit,
@@ -145,7 +145,7 @@ export let validateFields = function (transaction:Transaction, res) {
 //     update(req, res, next){
 //         let id = req.params.id;
         
-//         TransactionModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
+//         Model.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });
@@ -154,7 +154,7 @@ export let validateFields = function (transaction:Transaction, res) {
 //     delete(req, res, next){
 //         let id = req.params.id;
 
-//         TransactionModel.findByIdAndRemove(id, (ex, transaction) => {
+//         Model.findByIdAndRemove(id, (ex, transaction) => {
 //             return Utilities.checkError(ex, transaction, res);
 //             // return this.utilities.checkError(ex, transaction, res);
 //         });
