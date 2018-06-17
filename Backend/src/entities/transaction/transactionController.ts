@@ -1,8 +1,12 @@
-import * as utilities from "../../base/utilities";
 // import Utilities } from "../../base/utilities";
-import Model  from "./transactionModel";
-import Transaction from './transaction'
+import * as utilities from "../../base/utilities";
 import { Promise } from "mongoose";
+
+import Transaction from './transaction'
+import Model  from "./transactionModel";
+
+import AccountModel  from "../account/accountModel";
+import CategoryModel  from "../category/categoryModel";
 
 // let utilities: Utilities = new Utilities();
 
@@ -14,22 +18,74 @@ export let getAll = (req, res, next) => {
 };
 
 export let getById = (req, res, next) => {
-    let id = req.params.id;
+    let response: Response;
+   
+    try {
+        let id = req.params.id;
+        
+        Model.findById(id, (ex, transaction) => {
+            AccountModel.populate(transaction, { path: "account" }, (ex, transaction) => {
+                if(ex){
+                    throw ex;
+                }
+                
+                CategoryModel.populate(transaction, { path: "category" }, (ex, transaction) => {
+                    if (ex) {
+                        throw ex;
+                    }
+                    response = utilities.checkError(ex, transaction, res);
+                }); 
+            }); 
+        });
 
-    Model.findById(id, (ex, transaction) => {
-        return utilities.checkError(ex, transaction, res);
-        // return this.utilities.checkError(ex, transaction, res);
-    });
+    } catch (ex) {
+        response = res.status(500).json({ ex });
+    }
+    return response;
 };
 
+// export let getById = (req, res, next) => {
+//     let response: Response;
+//     // try {
+//     let id = req.params.id;
+//     let obj;
+
+//     Model.findById(id, (ex, transaction) => {
+//         AccountModel.populate(transaction, { path: "account" }, (ex, transaction) => {
+//             // this.obj = transaction;
+//             return this.utilities.checkError(ex, transaction, res);
+//         });
+//         // CategoryModel.populate(obj, { path: "category" }, (ex, transaction) => {
+//         //     this.obj = transaction;
+//         // }); 
+
+//     });
+
+//     // } catch (ex) {
+//     //     response = res.status(500).json({ex});
+//     // }
+//     // return response;
+// };
+
 export let create = (req, res, next) => {
+    console.log(req.body);
+    
+    let nuevo:Transaction = {
+        description : req.body.description,
+        value : req.body.value,
+        debitCredit : req.body.debitCredit,
+        date : req.body.date,
+        category : req.body.category,
+        account : req.body.account
+    };
+
     let newTransaction = new Model({
-        description: req.body.description,
-        value: req.body.value,
-        debitCredit: req.body.debitCredit,
-        date: req.body.date,
-        categoryId: req.body.categoryId,
-        accountId: req.body.accountId
+        description: nuevo.description,
+        value: nuevo.value,
+        debitCredit: nuevo.debitCredit,
+        date: nuevo.date,
+        category: nuevo.category,
+        account: nuevo.account
     });
 
     //VALIDACIONES 

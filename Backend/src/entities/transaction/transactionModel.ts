@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
 
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const transactionSchema = new schema({
+const transactionSchema = new Schema({
     description: {
         type: String, 
         required: true
@@ -20,12 +20,14 @@ const transactionSchema = new schema({
         required: true,
         default: new Date()
     }, 
-    categoryId:{
-        type: Number, 
+    category:{
+        type: Schema.Types.ObjectId,
+        ref: "CategoryModel",
         required: true
     }, 
-    accountId:{
-        type: Number, 
+    account:{
+        type: Schema.Types.ObjectId, 
+        ref: "AccountModel",
         required: true
     },
 });

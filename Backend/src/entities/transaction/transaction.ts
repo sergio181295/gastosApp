@@ -11,11 +11,14 @@
 //     }
 // }
 
+import Category from '../category/category';
+import Account from '../account/account';
+
 export default interface Transaction {
     description: string,
     value: number,
     debitCredit: boolean,
     date: Date,
-    categoryId: number,
-    accountId: number
+    category: Category,
+    account: Account
 }
