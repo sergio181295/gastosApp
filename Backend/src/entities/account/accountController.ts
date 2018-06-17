@@ -16,30 +16,25 @@ export let getAll = (req, res, next) => {
 export let getById = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findById(id, (ex, transaction) => {
-        return utilities.checkError(ex, transaction, res);
-        // return this.utilities.checkError(ex, transaction, res);
+    AccountModel.findById(id, (ex, account) => {
+        return utilities.checkError(ex, account, res);
+        // return this.utilities.checkError(ex, account, res);
     });
 };
 
 export let create = (req, res, next) => {
     let newTransaction = new AccountModel({
-        description: req.body.description,
-        value: req.body.value,
-        debitCredit: req.body.debitCredit,
-        date: req.body.date,
-        categoryId: req.body.categoryId,
-        accountId: req.body.accountId
+        name: req.body.name,
+        initialValue: req.body.initialValue
     });
 
     //VALIDACIONES 
     this.validateFields(newTransaction, res)
     .then((result) =>{
-        newTransaction.save((ex, transaction) => {
-            return utilities.checkError(ex, transaction, res);
-            // return this.utilities.checkError(ex, transaction, res);
+        newTransaction.save((ex, account) => {
+            return utilities.checkError(ex, account, res);
+            // return this.utilities.checkError(ex, account, res);
         });
-
     })
     .catch((ex)=>{
         return utilities.checkError(ex, null, res);
@@ -50,26 +45,26 @@ export let create = (req, res, next) => {
 export let update = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
-        return utilities.checkError(ex, transaction, res);
-        // return this.utilities.checkError(ex, transaction, res);
+    AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
+        return utilities.checkError(ex, account, res);
+        // return this.utilities.checkError(ex, account, res);
     });
 };
 
 export let remove = (req, res, next) => {
     let id = req.params.id;
 
-    AccountModel.findByIdAndRemove(id, (ex, transaction) => {
-        return utilities.checkError(ex, transaction, res);
-        // return this.utilities.checkError(ex, transaction, res);
+    AccountModel.findByIdAndRemove(id, (ex, account) => {
+        return utilities.checkError(ex, account, res);
+        // return this.utilities.checkError(ex, account, res);
     });
 };
 
-export let validateFields = function (transaction:Account, res) {
+export let validateFields = function (account:Account, res) {
     let error:string = "";
 
     return new Promise((resolve, reject) => {
-        if(transaction.initialValue < 0){
+        if(account.initialValue < 0){
             error += "El valor debe ser mayor o igual a  0.";
         }
 
@@ -114,9 +109,9 @@ export let validateFields = function (transaction:Account, res) {
 //     getById(req, res, next){
 //         let id = req.params.id;
 
-//         AccountModel.findById(id, (ex, transaction) => {
-//             return Utilities.checkError(ex, transaction, res);
-//             // return this.utilities.checkError(ex, transaction, res);
+//         AccountModel.findById(id, (ex, account) => {
+//             return Utilities.checkError(ex, account, res);
+//             // return this.utilities.checkError(ex, account, res);
 //         });
 //     }
 
@@ -133,34 +128,34 @@ export let validateFields = function (transaction:Account, res) {
 //         //VALIDACIONES 
 //         // TransactionController.validateFields('hola');
 
-//         newTransaction.save((ex, transaction) => {
-//             // let check = this.utilities.checkError(ex, transaction);
+//         newTransaction.save((ex, account) => {
+//             // let check = this.utilities.checkError(ex, account);
 //             // return res.status(check.status).json(check.result);
             
-//             return Utilities.checkError(ex, transaction, res);
-//             // return this.utilities.checkError(ex, transaction, res);
+//             return Utilities.checkError(ex, account, res);
+//             // return this.utilities.checkError(ex, account, res);
 //         });
 //     }
 
 //     update(req, res, next){
 //         let id = req.params.id;
         
-//         AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, transaction) => {
-//             return Utilities.checkError(ex, transaction, res);
-//             // return this.utilities.checkError(ex, transaction, res);
+//         AccountModel.findByIdAndUpdate(id, req.body, { new: true }, (ex, account) => {
+//             return Utilities.checkError(ex, account, res);
+//             // return this.utilities.checkError(ex, account, res);
 //         });
 //     }
 
 //     delete(req, res, next){
 //         let id = req.params.id;
 
-//         AccountModel.findByIdAndRemove(id, (ex, transaction) => {
-//             return Utilities.checkError(ex, transaction, res);
-//             // return this.utilities.checkError(ex, transaction, res);
+//         AccountModel.findByIdAndRemove(id, (ex, account) => {
+//             return Utilities.checkError(ex, account, res);
+//             // return this.utilities.checkError(ex, account, res);
 //         });
 //     }
 
-//     validateFields(transaction){
-//         console.log(transaction);
+//     validateFields(account){
+//         console.log(account);
 //     }
 // }
